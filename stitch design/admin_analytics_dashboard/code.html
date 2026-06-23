@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CivicAI | Admin Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#4cd7f6",
+                    "tertiary-container": "#ad3b00",
+                    "surface-bright": "#f8f9ff",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#d3e4fe",
+                    "on-surface-variant": "#434654",
+                    "primary-fixed-dim": "#b5c4ff",
+                    "on-secondary-fixed": "#001f26",
+                    "error": "#ba1a1a",
+                    "secondary": "#00687a",
+                    "on-tertiary-fixed": "#380d00",
+                    "tertiary-fixed": "#ffdbcf",
+                    "on-primary-container": "#d4dcff",
+                    "tertiary-fixed-dim": "#ffb59a",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#003dab",
+                    "on-tertiary-fixed-variant": "#802a00",
+                    "primary": "#003fb1",
+                    "surface": "#f8f9ff",
+                    "inverse-surface": "#213145",
+                    "inverse-primary": "#b5c4ff",
+                    "primary-container": "#1a56db",
+                    "inverse-on-surface": "#eaf1ff",
+                    "outline-variant": "#c3c5d7",
+                    "on-primary-fixed": "#00174d",
+                    "on-tertiary-container": "#ffd4c5",
+                    "background": "#f8f9ff",
+                    "surface-dim": "#cbdbf5",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#57dffe",
+                    "surface-tint": "#1353d8",
+                    "surface-container-high": "#dce9ff",
+                    "tertiary": "#852b00",
+                    "on-background": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "outline": "#737686",
+                    "secondary-fixed": "#acedff",
+                    "on-secondary-container": "#006172",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed": "#dbe1ff",
+                    "on-tertiary": "#ffffff",
+                    "on-surface": "#0b1c30"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "1rem",
+                    "sm": "0.75rem",
+                    "gutter": "1.5rem",
+                    "xs": "0.5rem",
+                    "container-max": "1280px",
+                    "xl": "2rem",
+                    "lg": "1.5rem",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #1A56DB 0%, #06B6D4 100%);
+        }
+        .chart-bar-glow {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-white/70 dark:bg-surface/70 backdrop-blur-xl border-b border-white/20 dark:border-outline-variant/20 shadow-sm">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold bg-gradient-to-r from-primary to-secondary-container bg-clip-text text-transparent">CivicAI</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs rounded-full hover:bg-black/5 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a city administrator in a bright, modern office setting. The lighting is soft and natural, emphasizing a professional yet approachable aesthetic. The image uses a clean, high-key background to align with the light-mode CivicAI design system, featuring subtle blues and whites." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuyRKf_eCrIK-zn4uK2vDuauKlF1oTqj-d0BKhRRmkZuoDYdW3bjcJEBHp43IP-o1JAcWirFQoTxOYy9-NWCFeHbIhUrnvi9sUzJ5X3b8aQRyahUrRFQnM2Vjqk2Nlc7Od2lvDfkDcmTviOmfZhDioqtggYoBap03ORfAdsozThNNY8tOYc2mDf1IFDefE5UOZphhqeFVkJUUvbSKel_g6smEhiG2C4eRQwwllEYZNRfCaEXEnkAf363zOGwbCRVScuqzowG6Epmo"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-40 flex flex-col p-md gap-xs bg-white/70 dark:bg-surface/70 backdrop-blur-xl border-r border-white/20 dark:border-outline-variant/20 shadow-md w-64 hidden md:flex">
+<div class="mb-lg px-md">
+<h2 class="font-headline-md text-headline-md font-bold text-primary">Admin Console</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">City Official Access</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="font-label-md">Issues</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-md">Map View</span>
+</a>
+<a class="flex items-center gap-sm bg-primary/10 text-primary rounded-lg px-md py-sm translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md">Users</span>
+</a>
+</nav>
+<button class="primary-gradient text-white font-label-md py-sm px-md rounded-xl flex items-center justify-center gap-xs hover:opacity-90 transition-all shadow-lg active:scale-95">
+<span class="material-symbols-outlined">campaign</span>
+<span>New Broadcast</span>
+</button>
+</aside>
+<!-- Main Content -->
+<main class="pt-24 pb-12 md:pl-72 pr-gutter px-gutter">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-xl">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Analytics Overview</h1>
+<p class="text-on-surface-variant font-body-md">Real-time governance performance and issue distribution metrics.</p>
+</div>
+<button class="primary-gradient text-white font-label-md px-lg py-sm rounded-xl flex items-center gap-xs shadow-md hover:scale-105 transition-all">
+<span class="material-symbols-outlined">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Issues by Category (Horizontal Bar Chart) -->
+<section class="lg:col-span-7 glass-card p-lg rounded-2xl">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface">Issues by Category</h3>
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</div>
+<div class="space-y-md">
+<!-- Pothole -->
+<div class="space-y-xs">
+<div class="flex justify-between font-label-md">
+<span>Pothole</span>
+<span>3</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-3">
+<div class="primary-gradient h-full rounded-full transition-all duration-1000 chart-bar-glow" style="width: 75%"></div>
+</div>
+</div>
+<!-- Broken Streetlight -->
+<div class="space-y-xs">
+<div class="flex justify-between font-label-md">
+<span>Broken Streetlight</span>
+<span>2</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-3">
+<div class="primary-gradient h-full rounded-full transition-all duration-1000 chart-bar-glow" style="width: 50%"></div>
+</div>
+</div>
+<!-- Water Leakage -->
+<div class="space-y-xs">
+<div class="flex justify-between font-label-md">
+<span>Water Leakage</span>
+<span>3</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-3">
+<div class="primary-gradient h-full rounded-full transition-all duration-1000 chart-bar-glow" style="width: 75%"></div>
+</div>
+</div>
+<!-- Garbage / Waste -->
+<div class="space-y-xs">
+<div class="flex justify-between font-label-md">
+<span>Garbage / Waste</span>
+<span>4</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-3">
+<div class="primary-gradient h-full rounded-full transition-all duration-1000 chart-bar-glow" style="width: 100%"></div>
+</div>
+</div>
+<!-- Open Manhole -->
+<div class="space-y-xs">
+<div class="flex justify-between font-label-md">
+<span>Open Manhole</span>
+<span>2</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-3">
+<div class="primary-gradient h-full rounded-full transition-all duration-1000 chart-bar-glow" style="width: 50%"></div>
+</div>
+</div>
+<!-- Road Damage -->
+<div class="space-y-xs">
+<div class="flex justify-between font-label-md">
+<span>Road Damage</span>
+<span>2</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-3">
+<div class="primary-gradient h-full rounded-full transition-all duration-1000 chart-bar-glow" style="width: 50%"></div>
+</div>
+</div>
+<!-- Other Issue -->
+<div class="space-y-xs">
+<div class="flex justify-between font-label-md">
+<span>Other Issue</span>
+<span>0</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-3">
+<div class="bg-outline-variant/30 h-full rounded-full w-0"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Issues by Status (Column Chart) -->
+<section class="lg:col-span-5 glass-card p-lg rounded-2xl flex flex-col">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface">Issues by Status</h3>
+</div>
+<div class="flex-1 flex items-end justify-around gap-sm pt-md border-b border-outline-variant/30 relative">
+<!-- Column: Open -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<span class="font-label-md text-primary">6</span>
+<div class="w-full primary-gradient rounded-t-lg transition-all duration-1000 hover:brightness-110" style="height: 180px"></div>
+<span class="text-xs font-semibold text-on-surface-variant truncate">Open</span>
+</div>
+<!-- Column: Verified -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<span class="font-label-md text-primary">3</span>
+<div class="w-full primary-gradient opacity-80 rounded-t-lg transition-all duration-1000 hover:brightness-110" style="height: 90px"></div>
+<span class="text-xs font-semibold text-on-surface-variant truncate">Verified</span>
+</div>
+<!-- Column: In Progress -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<span class="font-label-md text-primary">3</span>
+<div class="w-full primary-gradient opacity-60 rounded-t-lg transition-all duration-1000 hover:brightness-110" style="height: 90px"></div>
+<span class="text-xs font-semibold text-on-surface-variant truncate">In Progress</span>
+</div>
+<!-- Column: Resolved -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<span class="font-label-md text-primary">2</span>
+<div class="w-full primary-gradient opacity-40 rounded-t-lg transition-all duration-1000 hover:brightness-110" style="height: 60px"></div>
+<span class="text-xs font-semibold text-on-surface-variant truncate">Resolved</span>
+</div>
+<!-- Column: Rejected -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<span class="font-label-md text-primary">0</span>
+<div class="w-full bg-surface-container rounded-t-lg" style="height: 4px"></div>
+<span class="text-xs font-semibold text-on-surface-variant truncate">Rejected</span>
+</div>
+</div>
+</section>
+<!-- Severity Distribution (Donut Chart) -->
+<section class="lg:col-span-6 glass-card p-lg rounded-2xl">
+<div class="mb-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface">Severity Distribution</h3>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-center gap-xl h-64">
+<div class="relative w-48 h-48">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<!-- Background -->
+<path class="text-surface-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="100, 100" stroke-width="3"></path>
+<!-- Moderate: 4 (25%) -->
+<path class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="25, 100" stroke-dashoffset="0" stroke-width="3"></path>
+<!-- Minor: 4 (25%) -->
+<path class="text-primary-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="25, 100" stroke-dashoffset="-25" stroke-width="3"></path>
+<!-- Critical: 4 (25%) -->
+<path class="text-error" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="25, 100" stroke-dashoffset="-50" stroke-width="3"></path>
+<!-- High: 4 (25%) -->
+<path class="text-tertiary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="25, 100" stroke-dashoffset="-75" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-headline-lg font-bold">16</span>
+<span class="text-xs uppercase tracking-widest text-on-surface-variant">Reports</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md w-full max-w-xs">
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-label-md">Moderate: 4</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="font-label-md">Minor: 4</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-tertiary"></span>
+<span class="font-label-md">High: 4</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-error"></span>
+<span class="font-label-md">Critical: 4</span>
+</div>
+<div class="flex items-center gap-xs opacity-50">
+<span class="w-3 h-3 rounded-full bg-surface-container-highest"></span>
+<span class="font-label-md">Low: 0</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Total Issues Summary Chips -->
+<section class="lg:col-span-6 glass-card p-lg rounded-2xl flex flex-col gap-md">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Total Issues: 16</h3>
+<span class="material-symbols-outlined text-outline">history</span>
+</div>
+<div class="grid grid-cols-2 gap-md flex-1">
+<!-- Resolved -->
+<div class="bg-secondary/10 border border-secondary/20 rounded-xl p-md flex flex-col items-center justify-center transition-all hover:scale-105">
+<span class="text-headline-lg font-extrabold text-secondary">2</span>
+<span class="text-label-md font-bold text-secondary uppercase">Resolved</span>
+</div>
+<!-- Open -->
+<div class="bg-tertiary/10 border border-tertiary/20 rounded-xl p-md flex flex-col items-center justify-center transition-all hover:scale-105">
+<span class="text-headline-lg font-extrabold text-tertiary">9</span>
+<span class="text-label-md font-bold text-tertiary uppercase">Open</span>
+</div>
+<!-- In Progress -->
+<div class="bg-primary/10 border border-primary/20 rounded-xl p-md flex flex-col items-center justify-center transition-all hover:scale-105">
+<span class="text-headline-lg font-extrabold text-primary">3</span>
+<span class="text-label-md font-bold text-primary uppercase">In Progress</span>
+</div>
+<!-- Rejected -->
+<div class="bg-error/10 border border-error/20 rounded-xl p-md flex flex-col items-center justify-center transition-all hover:scale-105">
+<span class="text-headline-lg font-extrabold text-error">0</span>
+<span class="text-label-md font-bold text-error uppercase">Rejected</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl px-gutter flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-lowest border-t border-outline-variant/30 mt-12">
+<div class="flex flex-col gap-xs items-center md:items-start">
+<span class="font-label-md text-label-md font-bold text-on-surface">CivicAI Platform</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 CivicAI Platform. Empowering Transparent Governance.</p>
+</div>
+<nav class="flex gap-lg">
+<a class="text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Support</a>
+</nav>
+</footer>
+<script>
+        // Simple entry animations for chart bars
+        window.addEventListener('load', () => {
+            const bars = document.querySelectorAll('.chart-bar-glow');
+            bars.forEach(bar => {
+                const finalWidth = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.transition = 'width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    bar.style.width = finalWidth;
+                }, 100);
+            });
+        });
+    </script>
+</body></html>
