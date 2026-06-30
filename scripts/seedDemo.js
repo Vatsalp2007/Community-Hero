@@ -14,9 +14,9 @@ const db = getFirestore(app);
 db.settings({ ignoreUndefinedProperties: true });
 
 const DEMO_USERS = [
-  { email: 'demo@civicai.app', password: 'Demo@1234', displayName: 'Rahul Sharma', role: 'citizen', civicScore: 350, level: 'gold', totalReports: 8, totalResolved: 3 },
-  { email: 'officer@civicai.app', password: 'Officer@1234', displayName: 'Priya Patel', role: 'officer', civicScore: 100, level: 'silver', totalReports: 2, totalResolved: 0 },
-  { email: 'admin@civicai.app', password: 'Admin@1234', displayName: 'Amit Joshi', role: 'admin', civicScore: 50, level: 'bronze', totalReports: 0, totalResolved: 0 }
+  { email: 'demo@jansetu.app', password: 'Demo@1234', displayName: 'Rahul Sharma', role: 'citizen', civicScore: 350, level: 'gold', totalReports: 8, totalResolved: 3 },
+  { email: 'officer@jansetu.app', password: 'Officer@1234', displayName: 'Priya Patel', role: 'officer', civicScore: 100, level: 'silver', totalReports: 2, totalResolved: 0 },
+  { email: 'admin@jansetu.app', password: 'Admin@1234', displayName: 'Amit Joshi', role: 'admin', civicScore: 50, level: 'bronze', totalReports: 0, totalResolved: 0 }
 ];
 
 const WARDS = ['Ward 1 - Navrangpura', 'Ward 2 - Shahibaug', 'Ward 3 - Satellite', 'Ward 4 - Ellis Bridge', 'Ward 5 - Ambawadi'];

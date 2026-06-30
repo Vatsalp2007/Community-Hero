@@ -63,7 +63,7 @@ export default function LoginPage() {
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl shadow-lg" style={{ background: 'linear-gradient(135deg, #1A56DB, #06B6D4)' }}>
             CA
           </div>
-          <h1 className="text-2xl font-bold text-on-surface">Welcome to CivicAI</h1>
+          <h1 className="text-2xl font-bold text-on-surface">Welcome to JANSETU AI</h1>
           <p className="text-sm text-on-surface-variant mt-1">Report issues. Build better communities.</p>
         </div>
 

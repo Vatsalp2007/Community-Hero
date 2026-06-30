@@ -27,7 +27,7 @@ export default function TopBar({ onMenuToggle, user, profile }) {
         <button onClick={onMenuToggle} className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors">
           <Menu size={20} className="text-white/60" />
         </button>
-        <span className="text-lg font-bold bg-gradient-to-r from-blue-200 to-blue-50 bg-clip-text text-transparent">CivicAI</span>
+        <span className="text-lg font-bold bg-gradient-to-r from-blue-200 to-blue-50 bg-clip-text text-transparent">JANSETU AI</span>
       </div>
       <div className="relative" ref={ref}>
         <button

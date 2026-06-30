@@ -66,7 +66,7 @@ export default function UsersPage() {
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white/90">User Management</h1>
           <p className="text-white/60 text-sm sm:text-base mt-1">
-            Monitor citizen engagement, audit administrative access, and manage reputation scores across the CivicAI ecosystem.
+            Monitor citizen engagement, audit administrative access, and manage reputation scores across the JANSETU AI ecosystem.
           </p>
         </div>
         <div className="flex items-center gap-2 bg-white/10 p-1.5 rounded-xl shrink-0">

@@ -19,7 +19,7 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 h-[72px] bg-white/20 backdrop-blur-xl border-b border-white/10 shadow-sm">
       <div className="flex items-center gap-10">
         <Link to="/" className="font-headline-md text-headline-md font-bold bg-gradient-to-r from-blue-200 to-blue-50 bg-clip-text text-transparent drop-shadow-md">
-          CivicAI
+          JANSETU AI
         </Link>
         <nav className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map(({ to, label, authOnly }) => {

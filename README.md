@@ -1,4 +1,4 @@
-# CivicAI
+# JANSETU AI
 
 **Report. Verify. Resolve. Together.**
 
@@ -7,7 +7,7 @@ AI-powered hyperlocal civic issue reporting and resolution platform. Citizens re
 ## Architecture
 
 ```
-civicai/
+jansetu/
 ├── shared/        # Firebase config, types, utilities (shared between apps)
 ├── app/           # Citizen-facing React web app (mobile-first)
 ├── admin/         # Municipal officer/admin dashboard (desktop-first)
@@ -35,7 +35,7 @@ civicai/
 1. **Clone and install:**
    ```bash
    git clone <repo-url>
-   cd civicai
+    cd jansetu
    npm install
    ```
 
@@ -84,9 +84,9 @@ civicai/
 
 | Role | Email | Password |
 |------|-------|----------|
-| Citizen | demo@civicai.app | Demo@1234 |
-| Officer | officer@civicai.app | Officer@1234 |
-| Admin | admin@civicai.app | Admin@1234 |
+| Citizen | demo@jansetu.app | Demo@1234 |
+| Officer | officer@jansetu.app | Officer@1234 |
+| Admin | admin@jansetu.app | Admin@1234 |
 
 ## Deployment
 

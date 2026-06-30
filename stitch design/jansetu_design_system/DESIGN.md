@@ -1,5 +1,5 @@
 ---
-name: CivicAI Design System
+name: JANSETU AI Design System
 colors:
   surface: '#f8f9ff'
   surface-dim: '#cbdbf5'
@@ -110,7 +110,7 @@ spacing:
 
 ## Brand & Style
 
-The design system is engineered for **CivicAI**, a high-end civic engagement platform that bridges the gap between citizens and local government. The brand personality is **authoritative yet accessible**, combining the precision of a data-driven enterprise tool with the empathy of a community-focused service.
+The design system is engineered for **JANSETU AI**, a high-end civic engagement platform that bridges the gap between citizens and local government. The brand personality is **authoritative yet accessible**, combining the precision of a data-driven enterprise tool with the empathy of a community-focused service.
 
 The visual style is **High-End Glassmorphism**. This aesthetic uses depth and translucency to create a "futuristic transparency," symbolizing the open and clear communication between the public and the state. By utilizing frosted surfaces and vibrant background blurs, the interface feels lightweight and premium, avoiding the "heavy" bureaucratic feel of traditional government software. It evokes feelings of trust, innovation, and civic pride.
 

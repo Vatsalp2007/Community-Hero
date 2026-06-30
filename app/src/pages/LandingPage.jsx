@@ -51,7 +51,7 @@ export default function LandingPage() {
       </div>
 
       <nav className="flex items-center justify-between px-6 py-4 bg-white/20 backdrop-blur-xl border-b border-white/10">
-        <span className="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-50">CivicAI</span>
+        <span className="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-50">JANSETU AI</span>
         {authButton}
       </nav>
 
@@ -118,7 +118,7 @@ export default function LandingPage() {
       </section>
 
       <footer className="px-6 py-8 border-t border-white/10 text-center">
-        <p className="text-sm text-white/40">CivicAI - Empowering citizens to build better communities</p>
+        <p className="text-sm text-white/40">JANSETU AI - Empowering citizens to build better communities</p>
       </footer>
     </div>
   );

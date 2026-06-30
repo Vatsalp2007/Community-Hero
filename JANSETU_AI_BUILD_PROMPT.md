@@ -1,4 +1,4 @@
-# CivicAI — Full Build Prompt for AI Coding Agent
+# JANSETU AI — Full Build Prompt for AI Coding Agent
 # Community Hero: Hyperlocal Problem Solver
 # Version: 2.0 (Firebase Spark Free Tier — No Cloud Functions)
 
@@ -6,7 +6,7 @@
 
 ## AGENT INSTRUCTIONS
 
-You are an expert full-stack developer. Build the **complete CivicAI web application** exactly as described in this document. Do not skip any section. Do not ask for clarification — make sensible decisions where details are unspecified. Write production-quality code with proper error handling, loading states, and responsive design throughout.
+You are an expert full-stack developer. Build the **complete JANSETU AI web application** exactly as described in this document. Do not skip any section. Do not ask for clarification — make sensible decisions where details are unspecified. Write production-quality code with proper error handling, loading states, and responsive design throughout.
 
 Build everything in a single monorepo with two apps:
 1. `/app` — Citizen-facing React web app (mobile-first)
@@ -18,7 +18,7 @@ Both apps share a `/shared` folder for Firebase config, types, and utilities.
 
 ## SECTION 1: PROJECT OVERVIEW
 
-**Project Name:** CivicAI  
+**Project Name:** JANSETU AI  
 **Tagline:** Report. Verify. Resolve. Together.  
 **Type:** AI-powered hyperlocal civic issue reporting and resolution platform  
 **Problem:** Citizens have no easy, transparent way to report and track community infrastructure issues (potholes, broken streetlights, water leaks, garbage, open manholes). Municipal bodies have no structured data or prioritization system.  
@@ -76,7 +76,7 @@ VITE_VISION_API_KEY=
 ## SECTION 3: MONOREPO FOLDER STRUCTURE
 
 ```
-civicai/
+jansetu/
 ├── shared/
 │   ├── firebase.js              # Firebase init (auth, db, storage, messaging)
 │   ├── firestore.js             # All Firestore CRUD helpers
@@ -619,7 +619,7 @@ function getDefaultClassification() {
 ## SECTION 8: CITIZEN APP — PAGE BY PAGE SPECS
 
 ### 8.1 LandingPage.jsx
-- Full-screen hero with CivicAI logo, tagline "Report. Verify. Resolve. Together."
+- Full-screen hero with JANSETU AI logo, tagline "Report. Verify. Resolve. Together."
 - Show a live stats bar: "X issues reported | Y resolved | Z cities" (fetch from Firestore)
 - 3 feature cards: Smart Reporting, Community Verified, Real-time Tracking
 - CTA buttons: "Get Started" (→ /login) and "See Issues Near You" (→ /home without auth)
@@ -737,7 +737,7 @@ Step-by-step wizard with 3 steps:
 ## SECTION 9: ADMIN DASHBOARD — PAGE BY PAGE SPECS
 
 ### 9.1 Layout
-- **Sidebar (desktop):** CivicAI logo, nav links, user info at bottom
+- **Sidebar (desktop):** JANSETU AI logo, nav links, user info at bottom
 - **Top bar:** Page title, search bar, notification bell, user menu
 - **Mobile:** Collapsible sidebar with hamburger menu
 - Sidebar nav items: Dashboard, Issues, Map View, Analytics, Users, Settings
@@ -1171,7 +1171,7 @@ Add `trackingId` field to issue document on creation.
 ### Root `package.json`
 ```json
 {
-  "name": "civicai",
+  "name": "jansetu",
   "private": true,
   "workspaces": ["app", "admin"],
   "scripts": {
@@ -1204,9 +1204,9 @@ This makes the demo look realistic immediately.
 
 Create these accounts in Firebase Auth and seed as users:
 ```
-Citizen: demo@civicai.app / Demo@1234
-Officer: officer@civicai.app / Officer@1234
-Admin: admin@civicai.app / Admin@1234
+Citizen: demo@jansetu.app / Demo@1234
+Officer: officer@jansetu.app / Officer@1234
+Admin: admin@jansetu.app / Admin@1234
 ```
 
 ---

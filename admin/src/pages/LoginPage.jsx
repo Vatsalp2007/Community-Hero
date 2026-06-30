@@ -34,7 +34,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-extrabold bg-gradient-to-r from-[#1A56DB] to-[#06B6D4] bg-clip-text text-transparent">
-            CivicAI Admin
+            JANSETU AI Admin
           </h1>
           <p className="text-white/60 mt-2">
             Municipal Officer Dashboard

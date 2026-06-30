@@ -47,9 +47,9 @@ const DEMO_ISSUES = [
 ];
 
 const DEMO_USERS = [
-  { email: "demo@civicai.app", password: "Demo@1234", displayName: "Rahul Sharma", role: "citizen", civicScore: 350, level: "gold", totalReports: 8, totalResolved: 3 },
-  { email: "officer@civicai.app", password: "Officer@1234", displayName: "Priya Patel", role: "officer", civicScore: 100, level: "silver", totalReports: 2, totalResolved: 0 },
-  { email: "admin@civicai.app", password: "Admin@1234", displayName: "Amit Joshi", role: "admin", civicScore: 50, level: "bronze", totalReports: 0, totalResolved: 0 }
+  { email: "demo@jansetu.app", password: "Demo@1234", displayName: "Rahul Sharma", role: "citizen", civicScore: 350, level: "gold", totalReports: 8, totalResolved: 3 },
+  { email: "officer@jansetu.app", password: "Officer@1234", displayName: "Priya Patel", role: "officer", civicScore: 100, level: "silver", totalReports: 2, totalResolved: 0 },
+  { email: "admin@jansetu.app", password: "Admin@1234", displayName: "Amit Joshi", role: "admin", civicScore: 50, level: "bronze", totalReports: 0, totalResolved: 0 }
 ];
 
 async function seedUsers() {
@@ -185,7 +185,7 @@ async function seedIssues(citizenUid) {
 }
 
 async function main() {
-  console.log("=== CivicAI Seed Data Script ===\n");
+  console.log("=== JANSETU AI Seed Data Script ===\n");
 
   const userIds = await seedUsers();
 
