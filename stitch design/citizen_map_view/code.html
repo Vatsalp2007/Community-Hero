@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CivicAI - Interactive Map View</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .map-container {
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .issue-gradient {
+            background: linear-gradient(135deg, #1A56DB 0%, #06B6D4 100%);
+        }
+        /* Hide scrollbars for cleaner UI */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "tertiary-container": "#ad3b00",
+                        "surface-bright": "#f8f9ff",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "on-surface-variant": "#434654",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "on-secondary-fixed": "#001f26",
+                        "error": "#ba1a1a",
+                        "secondary": "#00687a",
+                        "on-tertiary-fixed": "#380d00",
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-primary-container": "#d4dcff",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#003dab",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "primary": "#003fb1",
+                        "surface": "#f8f9ff",
+                        "inverse-surface": "#213145",
+                        "inverse-primary": "#b5c4ff",
+                        "primary-container": "#1a56db",
+                        "inverse-on-surface": "#eaf1ff",
+                        "outline-variant": "#c3c5d7",
+                        "on-primary-fixed": "#00174d",
+                        "on-tertiary-container": "#ffd4c5",
+                        "background": "#f8f9ff",
+                        "surface-dim": "#cbdbf5",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#57dffe",
+                        "surface-tint": "#1353d8",
+                        "surface-container-high": "#dce9ff",
+                        "tertiary": "#852b00",
+                        "on-background": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "outline": "#737686",
+                        "secondary-fixed": "#acedff",
+                        "on-secondary-container": "#006172",
+                        "surface-container-low": "#eff4ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#0b1c30"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "1rem",
+                        "sm": "0.75rem",
+                        "gutter": "1.5rem",
+                        "xs": "0.5rem",
+                        "container-max": "1280px",
+                        "xl": "2rem",
+                        "lg": "1.5rem",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-white/70 dark:bg-surface/70 backdrop-blur-xl border-b border-white/20 dark:border-outline-variant/20 shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="font-headline-md text-headline-md font-bold bg-gradient-to-r from-primary to-secondary-container bg-clip-text text-transparent">CivicAI</span>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1" href="#">Map</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors" href="#">Report</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors" href="#">My Reports</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors" href="#">Leaderboard</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors" href="#">Profile</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs rounded-full hover:bg-black/5 transition-all active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full border-2 border-primary/20 p-0.5 overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A professional headshot of a diverse community member, featuring soft natural lighting and a high-end light-mode aesthetic with shallow depth of field. The person has a friendly, engaged expression, representing the authoritative yet accessible brand of CivicAI. The background is a slightly blurred city park with clean, modern architectural details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCITFnWdvOg-216p7oZq3yCykcvd0xVVtMZ6a640pLEpb2d2Tf-3kIv43oMpHM5UbrjrgL3oRm-Wa_Ctxyx_XyFWlg5IjBDQoqsnHeDzqqD6J_CG3eyRHTFQWPawxeN5meiDRM-rRQ7aG4I9nW-iJzTEKZl4GE-_sMF6xrMCNjNS8kYxuF2C4-iaGKPBNnTMlO8dl3R-W2sAp0mtdE8m5DCnaG8NTUxNf3qrNgm5_tpr9WkpIrT5iawpbo9uaCF4rCqHG94DduQ6g"/>
+</div>
+</div>
+</header>
+<!-- Main Map Canvas -->
+<main class="relative h-screen w-screen pt-16">
+<!-- Interactive Map Background -->
+<div class="map-container" data-location="Ahmedabad, India" style="">
+<div class="w-full h-full bg-cover bg-center grayscale-[0.2] contrast-[1.1]" data-alt="A highly detailed and sophisticated aerial satellite map of a bustling metropolitan city with a prominent river flowing through the center. The map is overlaid with clean, professional digital markers in vibrant colors like orange, red, and green representing different civic issues. The visual style is premium and data-driven, featuring subtle high-contrast labels and a modern, high-end cartography aesthetic suited for an enterprise civic engagement platform." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAXYDPQ20XUG69LZXFzNQswxdlTjqJNzTNu1VXMPK7VSfFCq4eCEFyikBbuPPhKYZ01X7uLz1M9fj0JiOEsyvkKwCMBw9Hj9cu3oENccsadL6wl5uERBlS3ID4Xo84QJTBI1FENaDmlxvHZECtpK-yTzKhp7C8nsaH2eZe8XcufkkgCviMpIlSVlKJseb49QEMPOc4zJznRLbdVHIyjRISt37ZDNVHso9TizMeRgc1d5Vmrl06bPoAYYTm5E_oyp7SAupJtwVzTW0c')"></div>
+</div>
+<!-- Floating Overlays -->
+<div class="relative z-10 h-full p-gutter pointer-events-none flex flex-col md:flex-row gap-lg">
+<!-- Nearby Issues Side Panel -->
+<div class="w-full md:w-[380px] h-full flex flex-col pointer-events-auto">
+<!-- Search & Header -->
+<div class="glass-panel p-md rounded-xl shadow-md mb-md">
+<div class="flex items-center bg-white/80 rounded-lg px-md py-sm border border-outline-variant/30 focus-within:ring-2 ring-primary/20 transition-all">
+<span class="material-symbols-outlined text-outline mr-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-body-md placeholder:text-outline" placeholder="Search nearby issues..." type="text"/>
+</div>
+</div>
+<!-- Issues List Scroll Area -->
+<div class="glass-panel flex-1 rounded-xl shadow-lg overflow-hidden flex flex-col">
+<div class="p-lg border-b border-white/20 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-on-surface">9 Nearby Issues</h2>
+<span class="bg-primary/10 text-primary px-sm py-1 rounded-full font-label-md text-[12px]">Updated Live</span>
+</div>
+<div class="flex-1 overflow-y-auto p-md space-y-md no-scrollbar">
+<!-- Issue Card: Pothole -->
+<div class="bg-white/40 hover:bg-white/90 transition-all p-lg rounded-xl border border-white/40 cursor-pointer group shadow-sm hover:shadow-md">
+<div class="flex justify-between items-start mb-sm">
+<span class="bg-error-container text-on-error-container px-sm py-1 rounded-md text-[12px] font-bold uppercase tracking-wider">Critical</span>
+<span class="text-outline text-[12px]">2h ago</span>
+</div>
+<h3 class="font-headline-md text-[18px] mb-1 group-hover:text-primary transition-colors">Major Pothole on Main St</h3>
+<p class="text-on-surface-variant font-body-md text-sm line-clamp-2">The pothole is causing significant traffic congestion and potential tire damage for commuters heading north.</p>
+<div class="mt-md flex items-center gap-xs text-outline">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-[12px]">Near Mill Officer's Colony</span>
+</div>
+</div>
+<!-- Issue Card: Streetlight -->
+<div class="bg-white/40 hover:bg-white/90 transition-all p-lg rounded-xl border border-white/40 cursor-pointer group shadow-sm hover:shadow-md">
+<div class="flex justify-between items-start mb-sm">
+<span class="bg-secondary-container text-on-secondary-container px-sm py-1 rounded-md text-[12px] font-bold uppercase tracking-wider">Reported</span>
+<span class="text-outline text-[12px]">5h ago</span>
+</div>
+<h3 class="font-headline-md text-[18px] mb-1 group-hover:text-primary transition-colors">Broken Streetlight</h3>
+<p class="text-on-surface-variant font-body-md text-sm line-clamp-2">Streetlight at the corner of 5th Ave is completely out, creating a safety hazard for pedestrians at night.</p>
+<div class="mt-md flex items-center gap-xs text-outline">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-[12px]">Ambawadi Area</span>
+</div>
+</div>
+<!-- Issue Card: Garbage -->
+<div class="bg-white/40 hover:bg-white/90 transition-all p-lg rounded-xl border border-white/40 cursor-pointer group shadow-sm hover:shadow-md">
+<div class="flex justify-between items-start mb-sm">
+<span class="bg-tertiary-fixed-dim text-on-tertiary-fixed-variant px-sm py-1 rounded-md text-[12px] font-bold uppercase tracking-wider">In Progress</span>
+<span class="text-outline text-[12px]">1d ago</span>
+</div>
+<h3 class="font-headline-md text-[18px] mb-1 group-hover:text-primary transition-colors">Uncollected Garbage Pile</h3>
+<p class="text-on-surface-variant font-body-md text-sm line-clamp-2">Garbage hasn't been collected for 3 days. It's starting to smell and attract pests near the park entrance.</p>
+<div class="mt-md flex items-center gap-xs text-outline">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-[12px]">Law Garden North Gate</span>
+</div>
+</div>
+<!-- Placeholder for more items to show scrolling -->
+<div class="h-24 flex items-center justify-center opacity-50 italic text-sm">Scroll for more issues...</div>
+</div>
+</div>
+</div>
+<!-- Spacer for center map view -->
+<div class="flex-1 pointer-events-none"></div>
+<!-- Map Controls & Interaction -->
+<div class="flex flex-col gap-sm justify-end pointer-events-auto pb-gutter">
+<div class="glass-panel p-base rounded-lg flex flex-col items-center gap-xs shadow-md">
+<button class="p-sm hover:bg-white/50 rounded-md transition-all text-on-surface active:scale-90">
+<span class="material-symbols-outlined">add</span>
+</button>
+<div class="w-8 h-px bg-outline-variant/30"></div>
+<button class="p-sm hover:bg-white/50 rounded-md transition-all text-on-surface active:scale-90">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+<button class="glass-panel p-sm rounded-lg shadow-md hover:bg-white/80 transition-all active:scale-90">
+<span class="material-symbols-outlined text-primary">my_location</span>
+</button>
+<button class="glass-panel p-sm rounded-lg shadow-md hover:bg-white/80 transition-all active:scale-90">
+<span class="material-symbols-outlined text-on-surface">layers</span>
+</button>
+</div>
+</div>
+<!-- FAB: Report Issue -->
+<div class="fixed bottom-gutter right-gutter z-30">
+<button class="issue-gradient text-white flex items-center gap-sm px-xl py-lg rounded-full shadow-xl hover:shadow-primary/40 hover:scale-105 active:scale-95 transition-all duration-300">
+<span class="material-symbols-outlined font-bold" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="font-headline-md text-[18px] tracking-wide">Report Issue</span>
+</button>
+</div>
+<!-- Stats Backdrop Blur Bar (Bottom) -->
+<div class="fixed bottom-0 left-0 w-full h-12 bg-white/20 backdrop-blur-md z-20 flex items-center px-gutter justify-between border-t border-white/10 hidden md:flex">
+<div class="flex gap-lg items-center">
+<div class="flex items-center gap-xs">
+<div class="w-3 h-3 rounded-full bg-error"></div>
+<span class="text-on-surface text-[12px] font-label-md">Critical (4)</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-on-surface text-[12px] font-label-md">Moderate (12)</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+<span class="text-on-surface text-[12px] font-label-md">Resolved (48)</span>
+</div>
+</div>
+<div class="text-on-surface-variant text-[12px]">
+                Showing results for <span class="font-bold">West Zone, City Proper</span>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions for map markers simulation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.group');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    // Logic to highlight corresponding map marker could go here
+                });
+            });
+
+            // Smooth reveal animation for panels
+            const panels = document.querySelectorAll('.glass-panel');
+            panels.forEach((panel, index) => {
+                panel.style.opacity = '0';
+                panel.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    panel.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                    panel.style.opacity = '1';
+                    panel.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body></html>

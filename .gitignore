@@ -1,0 +1,5 @@
+serviceAccount.json
+*-adminsdk-*.json
+.env
+node_modules/
+dist/

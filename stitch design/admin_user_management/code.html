@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CivicAI Admin Console - Users</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "tertiary-container": "#ad3b00",
+                        "surface-bright": "#f8f9ff",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "on-surface-variant": "#434654",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "on-secondary-fixed": "#001f26",
+                        "error": "#ba1a1a",
+                        "secondary": "#00687a",
+                        "on-tertiary-fixed": "#380d00",
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-primary-container": "#d4dcff",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#003dab",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "primary": "#003fb1",
+                        "surface": "#f8f9ff",
+                        "inverse-surface": "#213145",
+                        "inverse-primary": "#b5c4ff",
+                        "primary-container": "#1a56db",
+                        "inverse-on-surface": "#eaf1ff",
+                        "outline-variant": "#c3c5d7",
+                        "on-primary-fixed": "#00174d",
+                        "on-tertiary-container": "#ffd4c5",
+                        "background": "#f8f9ff",
+                        "surface-dim": "#cbdbf5",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#57dffe",
+                        "surface-tint": "#1353d8",
+                        "surface-container-high": "#dce9ff",
+                        "tertiary": "#852b00",
+                        "on-background": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "outline": "#737686",
+                        "secondary-fixed": "#acedff",
+                        "on-secondary-container": "#006172",
+                        "surface-container-low": "#eff4ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#0b1c30"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "1rem",
+                        "sm": "0.75rem",
+                        "gutter": "1.5rem",
+                        "xs": "0.5rem",
+                        "container-max": "1280px",
+                        "xl": "2rem",
+                        "lg": "1.5rem",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 63, 177, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 104, 122, 0.05) 0px, transparent 50%);
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-on-surface">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-white/70 dark:bg-surface/70 backdrop-blur-xl border-b border-white/20 shadow-sm">
+<div class="flex items-center gap-sm">
+<span class="font-headline-md text-headline-md font-bold bg-gradient-to-r from-primary to-secondary-container bg-clip-text text-transparent">CivicAI</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-white/50 border border-outline-variant/30 rounded-full focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-body-md w-64" placeholder="Search citizens..." type="text"/>
+</div>
+<button class="p-2 rounded-full hover:bg-white/10 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="flex items-center gap-sm bg-white/40 p-1 pr-4 rounded-full border border-white/20">
+<div class="w-8 h-8 rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a modern city official, wearing a sharp navy blue suit, set against a blurred background of a high-tech municipal control center with glowing digital maps. The lighting is crisp and bright, reflecting a professional and authoritative light-mode aesthetic consistent with high-end corporate software." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMrrglo2O8RJZABGRI637P_5Nv77oB9UXnLW3kI8ijp5lfHZGn25UcTdTMMUjTZl2rT626iyrNkzd8sSYcZuT2dkfG2sgYr9OSG1SY-Oz8FeGUfdnNwYlLUOuVBx2nrL70ETnudVbx75BaHqWsY8ywSK0WRop8igu7zkPZMnErIeei1EUBRKtXmxaCfvUhvJpyFgHXwrs97_6oPvVXo_H9ofCdaGFwzRwujIu6OTXL0H4o-a1WXBQdqj2A7cxdRoPd_mwiE7q2jCU"/>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Admin User</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<nav class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-40 flex flex-col p-md gap-xs bg-white/70 backdrop-blur-xl border-r border-white/20 shadow-md w-64 hidden md:flex">
+<div class="mb-lg px-md">
+<p class="font-headline-md text-headline-md font-bold text-primary">Admin Console</p>
+<p class="font-label-md text-label-md text-on-surface-variant opacity-70">City Official Access</p>
+</div>
+<div class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg px-md py-sm transition-all group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg px-md py-sm transition-all group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary" data-icon="report_problem">report_problem</span>
+<span class="font-label-md text-label-md">Issues</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg px-md py-sm transition-all group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary" data-icon="map">map</span>
+<span class="font-label-md text-label-md">Map View</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg px-md py-sm transition-all group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-sm bg-primary/10 text-primary rounded-lg px-md py-sm translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+</div>
+<div class="mt-auto">
+<button class="w-full py-3 px-4 bg-primary text-white rounded-xl font-label-md flex items-center justify-center gap-sm shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                New Broadcast
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-12 md:pl-72 pr-gutter px-gutter min-h-screen">
+<div class="max-w-container-max mx-auto">
+<!-- Page Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+<div>
+<h1 class="font-display-lg text-headline-lg text-on-surface">User Management</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">
+                        Monitor citizen engagement, audit administrative access, and manage reputation scores across the CivicAI ecosystem.
+                    </p>
+</div>
+<div class="flex items-center gap-sm glass p-1.5 rounded-xl">
+<button class="px-4 py-2 bg-white rounded-lg shadow-sm font-label-md text-primary">All Users</button>
+<button class="px-4 py-2 text-on-surface-variant hover:text-primary transition-colors font-label-md">Officials</button>
+<button class="px-4 py-2 text-on-surface-variant hover:text-primary transition-colors font-label-md">Reports</button>
+</div>
+</div>
+<!-- Dashboard Stats Summary (Bento-lite) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+<div class="glass p-lg rounded-xl flex flex-col justify-between h-32 border-l-4 border-l-primary">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Active Users</span>
+<div class="flex items-end justify-between">
+<span class="font-display-lg text-headline-lg">12,842</span>
+<span class="text-green-600 font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> 12%
+                        </span>
+</div>
+</div>
+<div class="glass p-lg rounded-xl flex flex-col justify-between h-32 border-l-4 border-l-secondary">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Avg Civic Score</span>
+<div class="flex items-end justify-between">
+<span class="font-display-lg text-headline-lg">245</span>
+<span class="text-secondary font-label-md">Healthy</span>
+</div>
+</div>
+<div class="glass p-lg rounded-xl flex flex-col justify-between h-32 border-l-4 border-l-tertiary">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Pending Verifications</span>
+<div class="flex items-end justify-between">
+<span class="font-display-lg text-headline-lg">48</span>
+<span class="text-tertiary font-label-md">Action Required</span>
+</div>
+</div>
+</div>
+<!-- Main Data Table Container -->
+<div class="glass rounded-2xl overflow-hidden shadow-xl border border-white/30">
+<!-- Table Controls -->
+<div class="px-lg py-md border-b border-outline-variant/20 flex flex-wrap items-center justify-between gap-md bg-white/30">
+<div class="flex items-center gap-md">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">filter_list</span>
+<select class="pl-10 pr-8 py-2 bg-white/60 border border-outline-variant/30 rounded-lg text-label-md focus:ring-primary/20 transition-all appearance-none cursor-pointer">
+<option>All Roles</option>
+<option>Admin</option>
+<option>Officer</option>
+<option>Citizen</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[18px]">expand_more</span>
+</div>
+<span class="text-label-md text-on-surface-variant">Showing 3 of 12,842</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-white/40 rounded-lg transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 hover:bg-white/40 rounded-lg transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div>
+<!-- Table Content -->
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/10">
+<th class="px-lg py-4 font-label-md text-label-md text-on-surface-variant/70 uppercase">User</th>
+<th class="px-lg py-4 font-label-md text-label-md text-on-surface-variant/70 uppercase">Role</th>
+<th class="px-lg py-4 font-label-md text-label-md text-on-surface-variant/70 uppercase text-center">Civic Score</th>
+<th class="px-lg py-4 font-label-md text-label-md text-on-surface-variant/70 uppercase text-center">Reports</th>
+<th class="px-lg py-4 font-label-md text-label-md text-on-surface-variant/70 uppercase">Joined</th>
+<th class="px-lg py-4 font-label-md text-label-md text-on-surface-variant/70 uppercase text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- User: Priya Patel -->
+<tr class="hover:bg-white/40 transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">P</div>
+<div>
+<p class="font-label-md text-on-surface">Priya Patel</p>
+<p class="text-[12px] text-on-surface-variant">officer@civicai.app</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-3 py-1 rounded-full bg-secondary-container/20 text-on-secondary-container text-[12px] font-bold border border-secondary-container/30 uppercase">Officer</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="font-headline-md text-headline-md text-primary">100</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="font-label-md text-label-md">2</span>
+</td>
+<td class="px-lg py-md">
+<span class="text-label-md text-on-surface-variant">about 1 hour ago</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="relative inline-block text-left">
+<select class="pl-4 pr-8 py-1.5 bg-white border border-outline-variant/30 rounded-lg text-label-md focus:ring-primary/20 appearance-none cursor-pointer">
+<option>Officer</option>
+<option>Admin</option>
+<option>Citizen</option>
+<option>Deactivate</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[16px]">expand_more</span>
+</div>
+</td>
+</tr>
+<!-- User: Rahul Sharma 2 -->
+<tr class="hover:bg-white/40 transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary font-bold">R</div>
+<div>
+<p class="font-label-md text-on-surface">Rahul Sharma 2</p>
+<p class="text-[12px] text-on-surface-variant">demo@civicai.app</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-3 py-1 rounded-full bg-outline-variant/20 text-on-surface-variant text-[12px] font-bold border border-outline-variant/30 uppercase">Citizen</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="font-headline-md text-headline-md text-primary">370</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="font-label-md text-label-md">9</span>
+</td>
+<td class="px-lg py-md">
+<span class="text-label-md text-on-surface-variant">about 1 hour ago</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="relative inline-block text-left">
+<select class="pl-4 pr-8 py-1.5 bg-white border border-outline-variant/30 rounded-lg text-label-md focus:ring-primary/20 appearance-none cursor-pointer">
+<option>Citizen</option>
+<option>Admin</option>
+<option>Officer</option>
+<option>Deactivate</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[16px]">expand_more</span>
+</div>
+</td>
+</tr>
+<!-- User: Amit Joshi -->
+<tr class="hover:bg-white/40 transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed-dim/30 flex items-center justify-center text-tertiary font-bold">A</div>
+<div>
+<p class="font-label-md text-on-surface">Amit Joshi</p>
+<p class="text-[12px] text-on-surface-variant">admin@civicai.app</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-[12px] font-bold border border-primary/20 uppercase">Admin</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="font-headline-md text-headline-md text-primary">50</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="font-label-md text-label-md">0</span>
+</td>
+<td class="px-lg py-md">
+<span class="text-label-md text-on-surface-variant">about 1 hour ago</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="relative inline-block text-left">
+<select class="pl-4 pr-8 py-1.5 bg-white border border-outline-variant/30 rounded-lg text-label-md focus:ring-primary/20 appearance-none cursor-pointer">
+<option>Admin</option>
+<option>Officer</option>
+<option>Citizen</option>
+<option>Deactivate</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[16px]">expand_more</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-lg py-4 border-t border-outline-variant/20 flex items-center justify-between bg-white/30">
+<p class="text-label-md text-on-surface-variant">Page 1 of 428</p>
+<div class="flex items-center gap-sm">
+<button class="px-4 py-2 border border-outline-variant/30 rounded-lg text-label-md hover:bg-white/50 transition-all opacity-50 cursor-not-allowed">Previous</button>
+<button class="px-4 py-2 bg-primary text-white rounded-lg text-label-md shadow-md hover:shadow-lg transition-all">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full py-xl px-gutter flex flex-col md:flex-row justify-between items-center gap-md border-t border-outline-variant/30 bg-surface-container-lowest text-on-surface-variant mt-xl md:ml-64 w-[calc(100%-16rem)]">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-label-md text-label-md font-bold text-on-surface">CivicAI Platform</span>
+<p class="font-body-md text-body-md opacity-70">© 2024 CivicAI Platform. Empowering Transparent Governance.</p>
+</div>
+<div class="flex gap-lg flex-wrap justify-center">
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Support</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">City Hall Directory</a>
+</div>
+</footer>
+<script>
+        // Simple ripple effect for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', function(e) {
+                this.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', function(e) {
+                this.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', function(e) {
+                this.classList.remove('scale-95');
+            });
+        });
+
+        // Search bar interaction
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', function() {
+            this.parentElement.classList.add('scale-105');
+            this.parentElement.style.transition = 'all 0.3s ease';
+        });
+        searchInput.addEventListener('blur', function() {
+            this.parentElement.classList.remove('scale-105');
+        });
+    </script>
+</body></html>
